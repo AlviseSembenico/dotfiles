@@ -114,11 +114,19 @@ keys.globalkeys = gears.table.join(
             awful.client.focus.bydirection("up")
         end,
         {description = "focus up", group = "client"}),
-    awful.key({ superkey }, "Left",
-        function()
-            awful.client.focus.bydirection("left")
-        end,
-        {description = "focus left", group = "client"}),
+
+    awful.key({ superkey}, "Left",
+        function ()
+            for k,v in ipairs(screen) do
+                awful.tag.viewprev(screen[i])
+            end
+        end, 
+    {description = "view previous", group = "tag"}),
+    -- awful.kperkey }, "Left",
+    --     function()
+    --         awful.client.focus.bydirection("left")
+    --     end,
+    --     {descriptiey({ suon = "focus left", group = "client"}),
     awful.key({ superkey }, "Right",
         function()
             awful.client.focus.bydirection("right")
@@ -318,7 +326,7 @@ keys.globalkeys = gears.table.join(
     --awful.key({ superkey },            "d",     function () awful.screen.focused().mypromptbox:run() end,
     --{description = "run prompt", group = "launcher"}),
     -- Run program (d for dmenu ;)
-    awful.key({ superkey }, "d",
+    awful.key({ superkey }, "p",
         function()
             awful.spawn.with_shell("rofi -matching fuzzy -show combi")
         end,
@@ -456,8 +464,8 @@ keys.globalkeys = gears.table.join(
         {description = "send STOP signal to all firefox processes", group = "other"}),
     awful.key({ superkey, shiftkey }, "F7", function() awful.spawn.with_shell("freeze -u firefox") end,
         {description = "send CONT signal to all firefox processes", group = "other"}),
-    awful.key({ superkey }, "q", function() apps.scratchpad() end,
-        {description = "scratchpad", group = "launcher"}),
+    -- awful.key({ superkey }, "q", function() apps.scratchpad() end,
+    --     {description = "scratchpad", group = "launcher"}),
     -- Max layout
     -- Single tap: Set max layout
     -- Double tap: Also disable floating for ALL visible clients in the tag
@@ -536,8 +544,8 @@ keys.globalkeys = gears.table.join(
     awful.key({ superkey }, "b", function() wibars_toggle() end,
         {description = "show or hide wibar(s)", group = "awesome"}),
     -- Emacs (O for org mode)
-    awful.key({ superkey }, "o", apps.org,
-        {description = "emacs", group = "launcher"}),
+    -- awful.key({ superkey }, "o", apps.org,
+    --     {description = "emacs", group = "launcher"}),
     -- Markdown input scratchpad (I for input)
     -- For quickly typing markdown comments and pasting them in
     -- the browser
@@ -557,10 +565,10 @@ keys.globalkeys = gears.table.join(
         {description = "youtube search and play", group = "launcher"}),
     -- Spawn file manager
     awful.key({ superkey, shiftkey }, "f", apps.file_manager,
-        {description = "file manager", group = "launcher"}),
-    -- Process monitor
-    awful.key({ superkey }, "p", apps.process_monitor,
-        {description = "process monitor", group = "launcher"})
+        {description = "file manager", group = "launcher"})
+    -- process monitor
+    -- awful.key({ superkey }, "p", apps.process_monitor,
+    --     {description = "process monitor", group = "launcher"})
 )
 
 keys.clientkeys = gears.table.join(
@@ -589,6 +597,10 @@ keys.clientkeys = gears.table.join(
     awful.key({ superkey, shiftkey }, "l", function (c)
         helpers.move_client_dwim(c, "right")
     end),
+    awful.key({ superkey,}, "o", function (c) 
+        c:move_to_screen()               
+    end,
+              {description = "move to screen", group = "client"}),
 
     -- Single tap: Center client 
     -- Double tap: Center client + Floating + Resize
@@ -600,6 +612,7 @@ keys.clientkeys = gears.table.join(
                 helpers.float_and_resize(c, screen_width * 0.65, screen_height * 0.9)
             end)
     end),
+
 
     -- Relative move client
     awful.key({ superkey, shiftkey, ctrlkey }, "j", function (c)
@@ -677,7 +690,7 @@ keys.clientkeys = gears.table.join(
         {description = "normal mode", group = "client"}),
 
     -- Close client
-    awful.key({ superkey, shiftkey   }, "q",      function (c) c:kill() end,
+    awful.key({ superkey }, "q",      function (c) c:kill() end,
         {description = "close", group = "client"}),
     awful.key({ altkey }, "F4",      function (c) c:kill() end,
         {description = "close", group = "client"}),
@@ -958,5 +971,8 @@ keys.titlebar_buttons = gears.table.join(
 -- Set root (desktop) keys
 root.keys(keys.globalkeys)
 root.buttons(keys.desktopbuttons)
+client.connect_signal("mouse::enter", function(c)
+    c:emit_signal("request::activate", "mouse_enter", {raise = false})
+end)
 
 return keys

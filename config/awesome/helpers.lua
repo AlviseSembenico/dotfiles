@@ -163,12 +163,14 @@ end
 -- keypress.
 function helpers.tag_back_and_forth(tag_index)
     local s = mouse.screen
-    local tag = s.tags[tag_index]
-    if tag then
-        if tag == s.selected_tag then
-            awful.tag.history.restore()
-        else
-            tag:view_only()
+    for s in screen do 
+        local tag = s.tags[tag_index]
+        if tag then
+            if tag == s.selected_tag then
+                awful.tag.history.restore()
+            else
+                tag:view_only()
+            end
         end
     end
 end

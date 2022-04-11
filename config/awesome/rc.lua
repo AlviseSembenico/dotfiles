@@ -78,7 +78,7 @@ user = {
     -- Check apps.lua for more
     terminal = "kitty -1",
     floating_terminal = "kitty -1",
-    browser = "firefox",
+    browser = "google-chrome-stable",
     file_manager = "kitty -1 --class files -e ranger",
     editor = "kitty -1 --class editor -e vim",
     email_client = "kitty -1 --class email -e neomutt",
