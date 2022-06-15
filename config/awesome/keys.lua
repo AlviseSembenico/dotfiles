@@ -206,10 +206,10 @@ keys.globalkeys = gears.table.join(
     end),
 
     -- No need for these (single screen setup)
-    --awful.key({ superkey, ctrlkey }, "j", function () awful.screen.focus_relative( 1) end,
-    --{description = "focus the next screen", group = "screen"}),
-    --awful.key({ superkey, ctrlkey }, "k", function () awful.screen.focus_relative(-1) end,
-    --{description = "focus the previous screen", group = "screen"}),
+    awful.key({ superkey, ctrlkey }, "j", function() awful.screen.focus_relative(1) end,
+        { description = "focus the next screen", group = "screen" }),
+    awful.key({ superkey, ctrlkey }, "k", function() awful.screen.focus_relative(-1) end,
+        { description = "focus the previous screen", group = "screen" }),
 
     -- Urgent or Undo:
     -- Jump to urgent client or (if there is no such client) go back
@@ -502,6 +502,15 @@ keys.globalkeys = gears.table.join(
     -- Set floating layout
     awful.key({ superkey, shiftkey }, "s", function()
         awful.layout.set(awful.layout.suit.floating)
+    end,
+        { description = "set floating layout", group = "tag" }),
+    awful.key({ superkey }, "l", function()
+        local screen = awful.screen.focused()
+        if screen.geometry.width >= screen.geometry.height then
+            awful.layout.set(awful.layout.suit.tile)
+        else
+            awful.layout.set(awful.layout.suit.tile.top)
+        end
     end,
         { description = "set floating layout", group = "tag" }),
     -- Dashboard

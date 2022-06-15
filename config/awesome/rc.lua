@@ -306,18 +306,17 @@ awful.screen.connect_for_each_screen(function(s)
     local l = awful.layout.suit -- Alias to save time :)
     -- Tag layouts
     local layouts = {
-        l.max,
-        l.max,
-        l.max,
-        l.max,
         l.tile,
-        l.max,
-        l.max,
-        l.max,
         l.tile,
-        l.max
+        l.tile,
+        l.tile,
+        l.tile,
+        l.tile,
+        l.tile,
+        l.tile,
+        l.tile,
+        l.tile
     }
-
     -- Tag names
     local tagnames = beautiful.tagnames or { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }
     -- Create all tags at once (without seperate configuration for each tag)
