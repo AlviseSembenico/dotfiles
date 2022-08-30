@@ -115,22 +115,18 @@ keys.globalkeys = gears.table.join(
             awful.client.focus.bydirection("up")
         end,
         { description = "focus up", group = "client" }),
-
     awful.key({ superkey }, "Left",
         function()
-            for k, v in ipairs(screen) do
-                awful.tag.viewprev(screen[i])
+            for s in screen do
+                awful.tag.viewprev(s)
             end
         end,
         { description = "view previous", group = "tag" }),
-    -- awful.kperkey }, "Left",
-    --     function()
-    --         awful.client.focus.bydirection("left")
-    --     end,
-    --     {descriptiey({ suon = "focus left", group = "client"}),
     awful.key({ superkey }, "Right",
         function()
-            awful.client.focus.bydirection("right")
+            for s in screen do
+                awful.tag.viewnext(s)
+            end
         end,
         { description = "focus right", group = "client" }),
 
@@ -542,7 +538,9 @@ keys.globalkeys = gears.table.join(
     awful.key({ superkey }, "F4", function() awful.spawn("visualizer") end,
         { description = "cava", group = "launcher" }),
     -- Spawn ncmpcpp in a terminal, with a special visualizer config
-    awful.key({ superkey, shiftkey }, "F4", function() awful.spawn(user.terminal .. " -e 'ncmpcpp -c ~/.config/ncmpcpp/config_visualizer -s visualizer'") end,
+    awful.key({ superkey, shiftkey }, "F4",
+        function() awful.spawn(user.terminal .. " -e 'ncmpcpp -c ~/.config/ncmpcpp/config_visualizer -s visualizer'") end
+        ,
         { description = "ncmpcpp", group = "launcher" }),
     -- Network dialog: nmapplet rofi frontend
     awful.key({ superkey }, "F11", function() awful.spawn("networks-rofi") end,
